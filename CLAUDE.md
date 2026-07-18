@@ -13,21 +13,29 @@ npm run lint      # Run ESLint
 
 ## Architecture
 
-This is a single-page React 19 + Vite app with **no routing and no sub-components** — all logic lives in `src/App.jsx`.
+This is a single-page React 19 + Vite app with **no routing**. `App.jsx` owns the top-level `transactions` state and composes three presentational/stateful child components (`src/Summary.jsx`, `src/TransactionForm.jsx`, `src/TransactionList.jsx`) — it no longer contains totals, form, or table markup itself.
+
+### Components
+
+| Component | Props in | Owns locally | Emits |
+|---|---|---|---|
+| `App.jsx` | — | `transactions` | — |
+| `Summary.jsx` | `transactions` | — (derives totals each render) | — |
+| `TransactionForm.jsx` | `categories`, `onAddTransaction` | `description`, `amount`, `type`, `category` (form fields) | calls `onAddTransaction(newTransaction)` on submit, then resets its own fields |
+| `TransactionList.jsx` | `transactions`, `categories` | `filterType`, `filterCategory` | — |
 
 ### State
 
-Nine `useState` variables in `App.jsx`:
-- `transactions` — array of `{ id, description, amount, type, category, date }`
-- `description`, `amount`, `type`, `category` — controlled form inputs for adding a transaction
-- `filterType`, `filterCategory` — control which transactions are shown in the table
+- `App.jsx`: `transactions` — array of `{ id, description, amount, type, category, date }`.
+- `TransactionForm.jsx`: `description`, `amount`, `type`, `category` — controlled form inputs (local to the form; not lifted to `App.jsx`).
+- `TransactionList.jsx`: `filterType`, `filterCategory` — control which transactions are shown in the table (local to the list; not lifted to `App.jsx`).
 
 ### Data flow
 
-1. Eight hardcoded transactions seed the initial state.
-2. Summary totals (`totalIncome`, `totalExpenses`, `balance`) are derived inline via `reduce()`.
-3. The transaction list is filtered by `filterType` and `filterCategory` (AND logic) before rendering.
-4. Submitting the form appends a new transaction (using `Date.now()` as id) and resets form fields.
+1. Eight hardcoded transactions seed `App.jsx`'s initial state.
+2. `Summary` derives `totalIncome`, `totalExpenses`, and `balance` via `reduce()` from the `transactions` prop.
+3. `TransactionList` filters by `filterType` and `filterCategory` (AND logic) before rendering.
+4. Submitting `TransactionForm` builds a new transaction (using `Date.now()` as id), calls `onAddTransaction` to append it in `App.jsx`, and resets its own form fields.
 
 ### Known intentional issues (per README — this is a course starter)
 
