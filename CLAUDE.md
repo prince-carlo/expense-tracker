@@ -22,7 +22,7 @@ This is a single-page React 19 + Vite app with **no routing**. `App.jsx` owns th
 | `App.jsx` | — | `transactions` | — |
 | `Summary.jsx` | `transactions` | — (derives totals each render) | — |
 | `TransactionForm.jsx` | `categories`, `onAddTransaction` | `description`, `amount`, `type`, `category` (form fields) | calls `onAddTransaction(newTransaction)` on submit, then resets its own fields |
-| `TransactionList.jsx` | `transactions`, `categories` | `filterType`, `filterCategory` | — |
+| `TransactionList.jsx` | `transactions`, `categories`, `onDeleteTransaction` | `filterType`, `filterCategory` | calls `onDeleteTransaction(id)` when a row's delete button is confirmed |
 
 ### State
 
@@ -36,11 +36,11 @@ This is a single-page React 19 + Vite app with **no routing**. `App.jsx` owns th
 2. `Summary` derives `totalIncome`, `totalExpenses`, and `balance` via `reduce()` from the `transactions` prop.
 3. `TransactionList` filters by `filterType` and `filterCategory` (AND logic) before rendering.
 4. Submitting `TransactionForm` builds a new transaction (using `Date.now()` as id), calls `onAddTransaction` to append it in `App.jsx`, and resets its own form fields.
+5. Clicking a row's delete button in `TransactionList` shows a `window.confirm` prompt; on confirmation it calls `onDeleteTransaction(id)`, which `App.jsx` handles by filtering that transaction out of state.
 
 ### Known intentional issues (per README — this is a course starter)
 
 - `amount` is stored and reduced as a **string**, causing string concatenation instead of numeric addition in the summary totals.
-- A `delete-btn` CSS class exists but no delete button is rendered.
 - No data persistence — state resets on page refresh.
 
 ### Styling
