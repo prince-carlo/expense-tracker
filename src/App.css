@@ -49,6 +49,23 @@ h1 {
   font-weight: bold;
 }
 
+.category-chart {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 24px;
+  background: #fff;
+}
+
+.category-chart h2 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.category-chart .empty-state {
+  color: #888;
+  font-size: 14px;
+}
+
 .add-transaction {
   border: 1px solid #ddd;
   padding: 16px;
