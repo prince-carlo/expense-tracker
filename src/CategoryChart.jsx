@@ -1,16 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Rectangle, ResponsiveContainer, LabelList } from 'recharts';
-
-// Fixed hue per category (identity, not rank) — order matches App.jsx's `categories` list.
-const CATEGORY_COLORS = {
-  food: '#2a78d6',
-  housing: '#008300',
-  utilities: '#e87ba4',
-  transport: '#eda100',
-  entertainment: '#1baf7a',
-  salary: '#eb6834',
-  other: '#4a3aa7',
-};
-const FALLBACK_COLOR = '#898781';
+import { CATEGORY_COLORS, FALLBACK_CATEGORY_COLOR as FALLBACK_COLOR } from './categoryColors';
 
 function CategoryBarShape(props) {
   const { fill, ...rest } = props;
@@ -31,24 +20,32 @@ function CategoryChart({ transactions }) {
 
   return (
     <div className="category-chart">
-      <h2>Spending by Category</h2>
+      <h2>Spending by category</h2>
       {data.length === 0 ? (
-        <p className="empty-state">No expenses yet.</p>
+        <p className="empty-state">No expenses recorded yet.</p>
       ) : (
         <ResponsiveContainer width="100%" height={Math.max(data.length * 40, 80)}>
-          <BarChart data={data} layout="vertical" margin={{ top: 4, right: 40, left: 8, bottom: 4 }}>
+          <BarChart data={data} layout="vertical" margin={{ top: 4, right: 44, left: 8, bottom: 4 }}>
             <XAxis type="number" hide />
             <YAxis
               type="category"
               dataKey="category"
-              width={90}
+              width={92}
               axisLine={false}
               tickLine={false}
               tickFormatter={value => value.charAt(0).toUpperCase() + value.slice(1)}
-              tick={{ fill: '#52514e', fontSize: 13 }}
+              tick={{ fill: '#57685c', fontSize: 13, fontFamily: 'IBM Plex Sans, sans-serif' }}
             />
             <Tooltip
-              cursor={{ fill: '#f5f5f5' }}
+              cursor={{ fill: '#dde9d7' }}
+              contentStyle={{
+                background: '#fbfcf9',
+                border: '1px solid #c7d4c1',
+                borderRadius: 4,
+                fontFamily: 'IBM Plex Sans, sans-serif',
+                fontSize: 13,
+              }}
+              labelStyle={{ color: '#1f2e22', fontWeight: 600 }}
               formatter={value => [`$${value}`, 'Spent']}
               labelFormatter={value => value.charAt(0).toUpperCase() + value.slice(1)}
             />
@@ -57,8 +54,9 @@ function CategoryChart({ transactions }) {
                 dataKey="amount"
                 position="right"
                 formatter={value => `$${value}`}
-                fill="#0b0b0b"
+                fill="#1f2e22"
                 fontSize={13}
+                fontFamily="IBM Plex Mono, monospace"
               />
             </Bar>
           </BarChart>

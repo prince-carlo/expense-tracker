@@ -1,3 +1,21 @@
+:root {
+  --paper: #eef3ea;
+  --paper-line: #dde9d7;
+  --paper-card: #fbfcf9;
+  --ink: #1f2e22;
+  --ink-soft: #57685c;
+  --ink-muted: #8b9a8a;
+  --rule: #c7d4c1;
+  --credit: #1b6b3c;
+  --credit-wash: #e3efe4;
+  --debit: #a6362b;
+  --debit-wash: #f5e6e2;
+
+  --font-display: "Zilla Slab", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +23,35 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  color: #333;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--paper-line) 0,
+    var(--paper-line) 1px,
+    var(--paper) 1px,
+    var(--paper) 42px
+  );
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
