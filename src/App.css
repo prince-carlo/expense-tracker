@@ -1,147 +1,180 @@
 .app {
-  position: relative;
   max-width: 880px;
-  margin: 40px auto;
-  padding: 40px 40px 56px 96px;
-}
-
-.app-margin-rule {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 56px;
-  width: 2px;
-  background: rgba(166, 54, 43, 0.4);
+  margin: 48px auto;
+  padding: 0 24px 56px;
 }
 
 .app-header {
   margin-bottom: 32px;
 }
 
+.error-banner {
+  background: var(--debit-wash);
+  border: 1px solid var(--debit);
+  color: var(--debit);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
 .app-header h1 {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(26px, 4vw, 38px);
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-size: clamp(24px, 4vw, 34px);
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--ink);
-  border-bottom: 3px solid var(--ink);
-  box-shadow: 0 6px 0 -3px var(--rule);
-  padding-bottom: 10px;
+}
+
+.app-header h1::before {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 6px 1px var(--amber-glow);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-header h1::before {
+    animation: power-pulse 2.6s ease-in-out infinite;
+  }
 }
 
 .subtitle {
-  margin-top: 12px;
+  margin-top: 10px;
+  margin-left: 21px;
+  font-family: var(--font-mono);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-soft);
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
 }
 
-/* ---- shared card chrome ---- */
+/* ---- shared panel chrome ---- */
 
 .category-chart,
 .add-transaction,
 .transactions {
-  background: var(--paper-card);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 24px;
-  margin-bottom: 28px;
-  box-shadow: 0 1px 2px rgba(31, 46, 34, 0.05);
+  background: var(--bg-raised);
+  border: 1px solid var(--grid-line);
+  border-radius: 8px;
+  padding: 22px 24px 26px;
+  margin-bottom: 24px;
 }
 
 .category-chart h2,
 .add-transaction h2,
 .transactions h2 {
-  font-family: var(--font-display);
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink);
-  padding-bottom: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  padding-bottom: 14px;
   margin-bottom: 18px;
-  border-bottom: 1px dashed var(--rule);
+  border-bottom: 1px solid var(--grid-line);
+}
+
+.category-chart h2::before,
+.add-transaction h2::before,
+.transactions h2::before {
+  content: ">";
+  color: var(--amber);
+  font-weight: 700;
 }
 
 .empty-state {
-  color: var(--ink-soft);
-  font-size: 14px;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 13px;
   padding: 8px 0 4px;
 }
 
-/* ---- summary stubs ---- */
+/* ---- summary readout ---- */
 
 .summary {
   display: flex;
-  margin-bottom: 28px;
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
 .summary-card {
   position: relative;
   flex: 1;
-  background: var(--paper-card);
-  border: 1px solid var(--rule);
-  padding: 20px 18px 18px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.summary-card + .summary-card {
-  margin-left: -1px;
-}
-
-.summary-card:first-child {
-  border-radius: 6px 0 0 6px;
-}
-
-.summary-card:last-child {
-  border-radius: 0 6px 6px 0;
-}
-
-.summary-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(31, 46, 34, 0.12);
-  z-index: 1;
-}
-
-.summary-card::before,
-.summary-card::after {
-  content: "";
-  position: absolute;
-  top: -7px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--paper);
-  border: 1px solid var(--rule);
+  background: var(--bg-raised);
+  border: 1px solid var(--grid-line);
+  border-radius: 8px;
+  padding: 18px 20px 20px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .summary-card::before {
-  left: -7px;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
 }
 
-.summary-card::after {
-  right: -7px;
+.summary-card:nth-child(1)::before {
+  background: var(--credit);
+  box-shadow: 0 0 8px var(--credit-glow);
+}
+
+.summary-card:nth-child(2)::before {
+  background: var(--debit);
+  box-shadow: 0 0 8px var(--debit-glow);
+}
+
+.summary-card:nth-child(3)::before {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber-glow);
+}
+
+.summary-card:nth-child(1):hover {
+  border-color: var(--credit);
+  box-shadow: 0 0 20px -6px var(--credit-glow);
+}
+
+.summary-card:nth-child(2):hover {
+  border-color: var(--debit);
+  box-shadow: 0 0 20px -6px var(--debit-glow);
+}
+
+.summary-card:nth-child(3):hover {
+  border-color: var(--amber);
+  box-shadow: 0 0 20px -6px var(--amber-glow);
 }
 
 .summary-label {
   display: block;
   font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   font-size: 11px;
   color: var(--ink-muted);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .income-amount,
 .expense-amount,
 .balance-amount {
   font-family: var(--font-mono);
-  font-weight: 600;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
@@ -158,16 +191,20 @@
 }
 
 .summary-card .income-amount,
-.summary-card .expense-amount,
-.summary-card .balance-amount {
-  font-size: 26px;
+.summary-card .expense-amount {
+  font-size: 24px;
 }
 
-/* ---- add-transaction slip ---- */
+.summary-card:nth-child(3) .balance-amount {
+  font-size: 30px;
+  text-shadow: 0 0 14px rgba(231, 237, 231, 0.25);
+}
+
+/* ---- add-transaction panel ---- */
 
 .add-transaction form {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   align-items: end;
 }
@@ -175,33 +212,50 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
+  flex: 1 1 130px;
+  min-width: 0;
+}
+
+.field-description {
+  flex: 2 1 200px;
+}
+
+.add-transaction .stamp-btn {
+  flex: 0 0 auto;
 }
 
 .field label {
   font-family: var(--font-mono);
   font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--ink-muted);
 }
 
 .add-transaction input,
 .add-transaction select,
 .filters select {
-  border: 1px solid var(--rule);
-  background: var(--paper);
+  border: 1px solid var(--grid-line);
+  background: var(--bg-inset);
   color: var(--ink);
   padding: 10px 12px;
+  font-family: var(--font-mono);
   font-size: 14px;
-  border-radius: 4px;
-  transition: border-color 0.15s ease;
+  border-radius: 5px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.add-transaction input::placeholder {
+  color: var(--ink-muted);
 }
 
 .add-transaction input:focus,
 .add-transaction select:focus,
 .filters select:focus {
-  border-color: var(--ink);
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(232, 176, 75, 0.12);
+  outline: none;
 }
 
 .add-transaction select.is-credit {
@@ -215,29 +269,31 @@
 }
 
 .stamp-btn {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--amber);
+  color: #14100a;
   border: none;
   padding: 11px 22px;
   font-family: var(--font-mono);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border-radius: 4px;
+  white-space: nowrap;
+  border-radius: 5px;
   cursor: pointer;
-  transition: transform 0.1s ease, background 0.15s ease;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .stamp-btn:hover {
-  background: #16241a;
+  background: #f2bf63;
+  box-shadow: 0 0 16px var(--amber-glow);
 }
 
 .stamp-btn:active {
   transform: scale(0.97) translateY(1px);
 }
 
-/* ---- transactions ledger ---- */
+/* ---- transactions log ---- */
 
 .filters {
   display: flex;
@@ -258,41 +314,43 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  font-family: var(--font-mono);
 }
 
 th {
   text-align: left;
-  font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   font-size: 11px;
+  font-weight: 600;
   color: var(--ink-muted);
   padding: 10px 12px;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 1px solid var(--grid-line);
 }
 
 td {
   padding: 12px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--grid-line-soft);
   vertical-align: middle;
+  color: var(--ink);
 }
 
 tbody tr {
   opacity: 1;
+  transition: background 0.15s ease;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   tbody tr {
-    animation: ledger-print 0.3s ease both;
+    animation: log-write 0.25s ease both;
   }
 }
 
-tbody tr:nth-child(even) {
-  background: rgba(27, 107, 60, 0.05);
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .cell-date {
-  font-family: var(--font-mono);
   color: var(--ink-soft);
   font-size: 13px;
   white-space: nowrap;
@@ -311,17 +369,19 @@ td.expense-amount {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 3px 9px;
-  border: 1.5px solid currentColor;
-  border-radius: 3px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
   white-space: nowrap;
+  background: color-mix(in srgb, currentColor 12%, transparent);
 }
 
 .delete-btn {
   background: transparent;
-  border: 1px solid var(--rule);
-  color: var(--ink-soft);
+  border: 1px solid var(--grid-line);
+  color: var(--ink-muted);
   padding: 6px 12px;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
   font-size: 12px;
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
@@ -333,10 +393,10 @@ td.expense-amount {
   background: var(--debit-wash);
 }
 
-@keyframes ledger-print {
+@keyframes log-write {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -344,41 +404,31 @@ td.expense-amount {
   }
 }
 
+@keyframes power-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
 /* ---- responsive ---- */
 
 @media (max-width: 720px) {
   .app {
-    padding: 28px 20px 40px;
-  }
-
-  .app-margin-rule {
-    display: none;
+    padding: 0 18px 40px;
+    margin-top: 32px;
   }
 
   .summary {
     flex-direction: column;
   }
 
-  .summary-card + .summary-card {
-    margin-left: 0;
-    margin-top: -1px;
-  }
-
-  .summary-card:first-child {
-    border-radius: 6px 6px 0 0;
-  }
-
-  .summary-card:last-child {
-    border-radius: 0 0 6px 6px;
-  }
-
-  .summary-card::before,
-  .summary-card::after {
-    display: none;
-  }
-
-  .add-transaction form {
-    grid-template-columns: 1fr;
+  .field,
+  .field-description {
+    flex-basis: 100%;
   }
 
   .stamp-btn {

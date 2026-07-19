@@ -11,7 +11,6 @@ function TransactionForm({ categories, onAddTransaction }) {
     if (!description || !amount) return;
 
     onAddTransaction({
-      id: Date.now(),
       description,
       amount,
       type,

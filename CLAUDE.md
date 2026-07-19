@@ -11,9 +11,11 @@ npm run preview   # Preview production build
 npm run lint      # Run ESLint
 ```
 
+Requires `.env.local` with `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` (see `.env.local.example`) — the app throws on load without them.
+
 ## Architecture
 
-This is a single-page React 19 + Vite app with **no routing**. `App.jsx` owns the top-level `transactions` state and composes three presentational/stateful child components (`src/Summary.jsx`, `src/TransactionForm.jsx`, `src/TransactionList.jsx`) — it no longer contains totals, form, or table markup itself.
+This is a single-page React 19 + Vite app with **no routing**, backed by a Supabase Postgres `transactions` table (see `src/supabaseClient.js`). `App.jsx` owns the top-level `transactions` state, loads it from Supabase on mount, and composes three presentational/stateful child components (`src/Summary.jsx`, `src/TransactionForm.jsx`, `src/TransactionList.jsx`) — it no longer contains totals, form, or table markup itself.
 
 ### Components
 
@@ -26,22 +28,23 @@ This is a single-page React 19 + Vite app with **no routing**. `App.jsx` owns th
 
 ### State
 
-- `App.jsx`: `transactions` — array of `{ id, description, amount, type, category, date }`.
+- `App.jsx`: `transactions` — array of `{ id, description, amount, type, category, date }`, plus `loading` and `error` for the Supabase round trip.
 - `TransactionForm.jsx`: `description`, `amount`, `type`, `category` — controlled form inputs (local to the form; not lifted to `App.jsx`).
 - `TransactionList.jsx`: `filterType`, `filterCategory` — control which transactions are shown in the table (local to the list; not lifted to `App.jsx`).
 
 ### Data flow
 
-1. Eight hardcoded transactions seed `App.jsx`'s initial state.
+1. On mount, `App.jsx` fetches all rows from the Supabase `transactions` table (newest `date` first) into state.
 2. `Summary` derives `totalIncome`, `totalExpenses`, and `balance` via `reduce()` from the `transactions` prop.
 3. `TransactionList` filters by `filterType` and `filterCategory` (AND logic) before rendering.
-4. Submitting `TransactionForm` builds a new transaction (using `Date.now()` as id), calls `onAddTransaction` to append it in `App.jsx`, and resets its own form fields.
-5. Clicking a row's delete button in `TransactionList` shows a `window.confirm` prompt; on confirmation it calls `onDeleteTransaction(id)`, which `App.jsx` handles by filtering that transaction out of state.
+4. Submitting `TransactionForm` builds a new transaction (no `id` — the database assigns one), calls `onAddTransaction`, which inserts it into Supabase and prepends the returned row (with its DB-generated `id`) to state; the form then resets its own fields regardless of the request's outcome.
+5. Clicking a row's delete button in `TransactionList` shows a `window.confirm` prompt; on confirmation it calls `onDeleteTransaction(id)`, which `App.jsx` handles by optimistically removing it from state, deleting it in Supabase, and rolling the state back if that call fails.
+6. Any Supabase error (fetch, insert, or delete) is surfaced via the `error` state as a banner at the top of the page.
 
 ### Known intentional issues (per README — this is a course starter)
 
 - `amount` is stored and reduced as a **string**, causing string concatenation instead of numeric addition in the summary totals.
-- No data persistence — state resets on page refresh.
+- The Supabase `transactions` table has row level security enabled but with fully public policies (no auth) — fine for local/demo use, not for a real multi-user deployment.
 
 ### Styling
 

@@ -1,17 +1,23 @@
 :root {
-  --paper: #eef3ea;
-  --paper-line: #dde9d7;
-  --paper-card: #fbfcf9;
-  --ink: #1f2e22;
-  --ink-soft: #57685c;
-  --ink-muted: #8b9a8a;
-  --rule: #c7d4c1;
-  --credit: #1b6b3c;
-  --credit-wash: #e3efe4;
-  --debit: #a6362b;
-  --debit-wash: #f5e6e2;
+  --bg: #0b0f0d;
+  --bg-raised: #121815;
+  --bg-inset: #0e1412;
+  --grid-line: #212b26;
+  --grid-line-soft: #182019;
+  --ink: #e7ede7;
+  --ink-soft: #8fa098;
+  --ink-muted: #5c6b63;
 
-  --font-display: "Zilla Slab", Georgia, "Times New Roman", serif;
+  --credit: #4ade9a;
+  --credit-glow: rgba(74, 222, 154, 0.35);
+  --credit-wash: rgba(74, 222, 154, 0.08);
+  --debit: #ff7a5c;
+  --debit-glow: rgba(255, 122, 92, 0.35);
+  --debit-wash: rgba(255, 122, 92, 0.08);
+  --amber: #e8b04b;
+  --amber-glow: rgba(232, 176, 75, 0.4);
+
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
@@ -25,14 +31,17 @@
 body {
   font-family: var(--font-body);
   color: var(--ink);
-  background-color: var(--paper);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    var(--paper-line) 0,
-    var(--paper-line) 1px,
-    var(--paper) 1px,
-    var(--paper) 42px
-  );
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(74, 222, 154, 0.06), transparent 60%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  background-attachment: fixed;
 }
 
 button,
@@ -42,7 +51,7 @@ select {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--amber);
   outline-offset: 2px;
 }
 

@@ -59,7 +59,6 @@ function TransactionList({ transactions, categories, onDeleteTransaction }) {
                       style={{
                         color: CATEGORY_COLORS[t.category] || FALLBACK_CATEGORY_COLOR,
                         borderColor: CATEGORY_COLORS[t.category] || FALLBACK_CATEGORY_COLOR,
-                        transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)`,
                       }}
                     >
                       {t.category}

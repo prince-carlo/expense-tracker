@@ -30,22 +30,23 @@ function CategoryChart({ transactions }) {
             <YAxis
               type="category"
               dataKey="category"
-              width={92}
+              width={110}
               axisLine={false}
               tickLine={false}
               tickFormatter={value => value.charAt(0).toUpperCase() + value.slice(1)}
-              tick={{ fill: '#57685c', fontSize: 13, fontFamily: 'IBM Plex Sans, sans-serif' }}
+              tick={{ fill: '#8fa098', fontSize: 12, fontFamily: 'IBM Plex Mono, monospace' }}
             />
             <Tooltip
-              cursor={{ fill: '#dde9d7' }}
+              cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }}
               contentStyle={{
-                background: '#fbfcf9',
-                border: '1px solid #c7d4c1',
-                borderRadius: 4,
-                fontFamily: 'IBM Plex Sans, sans-serif',
+                background: '#0e1412',
+                border: '1px solid #212b26',
+                borderRadius: 6,
+                fontFamily: 'IBM Plex Mono, monospace',
                 fontSize: 13,
               }}
-              labelStyle={{ color: '#1f2e22', fontWeight: 600 }}
+              labelStyle={{ color: '#e7ede7', fontWeight: 600 }}
+              itemStyle={{ color: '#e7ede7' }}
               formatter={value => [`$${value}`, 'Spent']}
               labelFormatter={value => value.charAt(0).toUpperCase() + value.slice(1)}
             />
@@ -54,7 +55,7 @@ function CategoryChart({ transactions }) {
                 dataKey="amount"
                 position="right"
                 formatter={value => `$${value}`}
-                fill="#1f2e22"
+                fill="#e7ede7"
                 fontSize={13}
                 fontFamily="IBM Plex Mono, monospace"
               />
