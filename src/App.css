@@ -8,15 +8,31 @@
   margin-bottom: 32px;
 }
 
-.error-banner {
-  background: var(--debit-wash);
-  border: 1px solid var(--debit);
-  color: var(--debit);
+.error-banner,
+.offline-banner,
+.sync-banner {
   font-family: var(--font-mono);
   font-size: 13px;
   padding: 10px 14px;
   border-radius: 6px;
   margin-bottom: 24px;
+}
+
+.error-banner {
+  background: var(--debit-wash);
+  border: 1px solid var(--debit);
+  color: var(--debit);
+}
+
+.offline-banner,
+.sync-banner {
+  background: rgba(232, 176, 75, 0.08);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+}
+
+.subtitle-offline {
+  color: var(--amber);
 }
 
 .app-header h1 {
@@ -348,6 +364,24 @@ tbody tr {
 
 tbody tr:hover {
   background: rgba(255, 255, 255, 0.02);
+}
+
+tbody tr.tx-pending {
+  background: rgba(232, 176, 75, 0.05);
+}
+
+.pending-badge {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  border-radius: 999px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .cell-date {
