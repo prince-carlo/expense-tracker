@@ -50,9 +50,16 @@ function TransactionList({ transactions, categories, onDeleteTransaction }) {
             </thead>
             <tbody>
               {filteredTransactions.map((t, i) => (
-                <tr key={t.id} style={{ animationDelay: `${Math.min(i, 10) * 30}ms` }}>
+                <tr
+                  key={t.id}
+                  className={t._pending ? 'tx-pending' : undefined}
+                  style={{ animationDelay: `${Math.min(i, 10) * 30}ms` }}
+                >
                   <td className="cell-date">{t.date}</td>
-                  <td>{t.description}</td>
+                  <td>
+                    {t.description}
+                    {t._pending && <span className="pending-badge">pending sync</span>}
+                  </td>
                   <td>
                     <span
                       className="category-chip"
@@ -71,12 +78,12 @@ function TransactionList({ transactions, categories, onDeleteTransaction }) {
                     <button
                       className="delete-btn"
                       onClick={() => {
-                        if (window.confirm("Delete this transaction?")) {
+                        if (t._pending || window.confirm("Delete this transaction?")) {
                           onDeleteTransaction(t.id);
                         }
                       }}
                     >
-                      Delete
+                      {t._pending ? 'Cancel' : 'Delete'}
                     </button>
                   </td>
                 </tr>
