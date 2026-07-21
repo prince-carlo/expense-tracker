@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CATEGORY_COLORS, FALLBACK_CATEGORY_COLOR } from './categoryColors'
+import { CATEGORY_COLORS, FALLBACK_CATEGORY_COLOR } from '../lib/categoryColors'
 
 function TransactionList({ transactions, categories, onDeleteTransaction }) {
   const [filterType, setFilterType] = useState("all");

@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Rectangle, ResponsiveContainer, LabelList } from 'recharts';
-import { CATEGORY_COLORS, FALLBACK_CATEGORY_COLOR as FALLBACK_COLOR } from './categoryColors';
+import { CATEGORY_COLORS, FALLBACK_CATEGORY_COLOR as FALLBACK_COLOR } from '../lib/categoryColors';
 
 function CategoryBarShape(props) {
   const { fill, ...rest } = props;

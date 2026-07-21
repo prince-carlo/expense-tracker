@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { supabase } from './supabaseClient'
-import { useOnlineStatus } from './useOnlineStatus'
+import { supabase } from './lib/supabaseClient'
+import { useOnlineStatus } from './hooks/useOnlineStatus'
 import {
   getQueue,
   setQueue as persistQueue,
   getCache,
   setCache,
   applyQueueToList,
-} from './offlineStore'
-import Summary from './Summary'
-import CategoryChart from './CategoryChart'
-import TransactionForm from './TransactionForm'
-import TransactionList from './TransactionList'
+} from './lib/offlineStore'
+import Summary from './components/Summary'
+import CategoryChart from './components/CategoryChart'
+import TransactionForm from './components/TransactionForm'
+import TransactionList from './components/TransactionList'
 import './App.css'
 
 function isNetworkError(err) {
